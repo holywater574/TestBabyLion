@@ -55,7 +55,7 @@ class ProductControllerTest {
     @DisplayName("Product 데이터 생성 테스트")
     void createProductTest() throws Exception {
         //Mock 객체에서 특정 메소드가 실행되는 경우 실제 Return을 줄 수 없기 때문에 아래와 같이 가정 사항을 만들어줌
-        given(productService.saveBabyLion(new BabyLionDto("pen","test@example.com", "010-1234-5678","cos1234","good")))
+        given(productService.saveBabyLion(new BabyLionDto("pen","test@example.com", "010-1234-5678","cos1234")))
                 .willReturn(new ResponseBabyLionDto(null, "pen","test@example.com", "010-1234-5678","cos1234","good"));
 
         BabyLionDto productDto = BabyLionDto.builder()
@@ -63,7 +63,6 @@ class ProductControllerTest {
                 .email("test@example.com")
                 .number("010-1234-5678")
                 .password("cos1234")
-                .profile("good")
                 .build();
 
         Gson gson = new Gson();
@@ -81,7 +80,7 @@ class ProductControllerTest {
                 .andExpect(jsonPath("$.email").exists())
                 .andDo(print());
 
-        verify(productService).saveBabyLion(new BabyLionDto("pen","test@example.com", "010-1234-5678","cos1234","good"));
+        verify(productService).saveBabyLion(new BabyLionDto("pen","test@example.com", "010-1234-5678","cos1234"));
     }
 }
 

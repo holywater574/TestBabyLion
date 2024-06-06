@@ -17,5 +17,4 @@ public class BabyLionDto {
 
     private String password;
 
-    private String profile;
 }
