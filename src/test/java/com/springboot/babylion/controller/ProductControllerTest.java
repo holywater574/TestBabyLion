@@ -27,12 +27,12 @@ class ProductControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    BabyLionServiceImpl productService;
+    BabyLionServiceImpl babyLionService;
 
     @Test
     @DisplayName("MockMvc를 통한 Product 데이터 가져오기 테스트")
-    void getProductTest() throws Exception {
-        given(productService.getBabyLion("test@example.com")).willReturn(
+    void getBabyLionTest() throws Exception {
+        given(babyLionService.getBabyLion("test@example.com")).willReturn(
                 new ResponseBabyLionDto(null, "pen","test@example.com", "010-1234-5678","cos1234","good"));
 
         String productId = "123";
@@ -49,13 +49,13 @@ class ProductControllerTest {
                 .andExpect(jsonPath("$.profile").exists())
                 .andDo(print());
 
-        verify(productService).getBabyLion("test@example.com");
+        verify(babyLionService).getBabyLion("test@example.com");
     }
     @Test
     @DisplayName("Product 데이터 생성 테스트")
-    void createProductTest() throws Exception {
+    void createBabyLionTest() throws Exception {
         //Mock 객체에서 특정 메소드가 실행되는 경우 실제 Return을 줄 수 없기 때문에 아래와 같이 가정 사항을 만들어줌
-        given(productService.saveBabyLion(new BabyLionDto("pen","test@example.com", "010-1234-5678","cos1234")))
+        given(babyLionService.saveBabyLion(new BabyLionDto("pen","test@example.com", "010-1234-5678","cos1234")))
                 .willReturn(new ResponseBabyLionDto(null, "pen","test@example.com", "010-1234-5678","cos1234","good"));
 
         BabyLionDto productDto = BabyLionDto.builder()
@@ -80,7 +80,7 @@ class ProductControllerTest {
                 .andExpect(jsonPath("$.email").exists())
                 .andDo(print());
 
-        verify(productService).saveBabyLion(new BabyLionDto("pen","test@example.com", "010-1234-5678","cos1234"));
+        verify(babyLionService).saveBabyLion(new BabyLionDto("pen","test@example.com", "010-1234-5678","cos1234"));
     }
 }
 

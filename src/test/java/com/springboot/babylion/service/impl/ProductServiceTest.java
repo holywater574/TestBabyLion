@@ -17,58 +17,58 @@ import org.mockito.Mockito;
 
 public class ProductServiceTest {
 
-    private BabyLionRepository productRepository = Mockito.mock(BabyLionRepository.class);
-    private BabyLionServiceImpl productService;
+    private BabyLionRepository babyLionRepository = Mockito.mock(BabyLionRepository.class);
+    private BabyLionServiceImpl babyLionService;
 
     @BeforeEach
     public void setUpTest() {
-        productService = new BabyLionServiceImpl(productRepository);
+        babyLionService = new BabyLionServiceImpl(babyLionRepository);
     }
 
 
     @Test
-    void getProductTest() {
+    void getBabyLionTest() {
         // given
-        BabyLion givenProduct = new BabyLion();
-        givenProduct.setNumber("123L");
-        givenProduct.setName("펜");
-        givenProduct.setPrice(1000);
-        givenProduct.setStock(1234);
+        BabyLion givenBabyLion = new BabyLion();
+        givenBabyLion.setNumber("123L");
+        givenBabyLion.setName("펜");
+        givenBabyLion.setPrice(1000);
+        givenBabyLion.setStock(1234);
 
-        Mockito.when(productRepository.findById(123L))
-                .thenReturn(Optional.of(givenProduct));
+        Mockito.when(babyLionRepository.findById(null))
+                .thenReturn(Optional.of(givenBabyLion));
 
         // when
-        ResponseBabyLionDto productResponseDto = productService.getBabyLion("test@example.com");
+        ResponseBabyLionDto babyLionResponseDto = babyLionService.getBabyLion("test@example.com");
 
         // then
-        Assertions.assertEquals(productResponseDto.getNumber(), givenProduct.getNumber());
-        Assertions.assertEquals(productResponseDto.getName(), givenProduct.getName());
-        Assertions.assertEquals(productResponseDto.getPassword(), givenProduct.getPassword());
-        Assertions.assertEquals(productResponseDto.getProfile(), givenProduct.getProfile());
-        Assertions.assertEquals(productResponseDto.getEmail(), givenProduct.getEmail());
+        Assertions.assertEquals(babyLionResponseDto.getNumber(), givenBabyLion.getNumber());
+        Assertions.assertEquals(babyLionResponseDto.getName(), givenBabyLion.getName());
+        Assertions.assertEquals(babyLionResponseDto.getPassword(), givenBabyLion.getPassword());
+        Assertions.assertEquals(babyLionResponseDto.getProfile(), givenBabyLion.getProfile());
+        Assertions.assertEquals(babyLionResponseDto.getEmail(), givenBabyLion.getEmail());
 
-        verify(productRepository).findById(123L);
+        verify(babyLionRepository).findById(null);
     }
 
 
     @Test
-    void saveProductTest() {
+    void saveBabyLionTest() {
         // given
-        Mockito.when(productRepository.save(any(BabyLion.class)))
+        Mockito.when(babyLionRepository.save(any(BabyLion.class)))
                 .then(returnsFirstArg());
 
         // when
-        ResponseBabyLionDto productResponseDto = productService.saveBabyLion(
+        ResponseBabyLionDto babyLionResponseDto = babyLionService.saveBabyLion(
                 new BabyLionDto("펜","test@example.com", "010-1234-5678","cos1234"));
 
         // then
-        Assertions.assertEquals(productResponseDto.getName(), "펜");
-        Assertions.assertEquals(productResponseDto.getPassword(), "1234");
-        Assertions.assertEquals(productResponseDto.getEmail(), "test@example.com");
-        Assertions.assertEquals(productResponseDto.getNumber(), "cos1234");
+        Assertions.assertEquals(babyLionResponseDto.getName(), "펜");
+        Assertions.assertEquals(babyLionResponseDto.getPassword(), "1234");
+        Assertions.assertEquals(babyLionResponseDto.getEmail(), "test@example.com");
+        Assertions.assertEquals(babyLionResponseDto.getNumber(), "cos1234");
 
-        verify(productRepository).save(any());
+        verify(babyLionRepository).save(any());
     }
 }
 
